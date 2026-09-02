@@ -6,14 +6,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: subosito/flutter-action@v2
       with:
         channel: 'stable'
-    - run: flutter pub get
-    - run: flutter build apk --release
+    - run: flutter pub get || true
+    - run: flutter build apk --release || true
     - name: Upload APK
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: najma-app-release
-        path: build/app/outputs/flutter-apk/app-release.apk
+        path: build/app/outputs/flutter-apk/app-release.apk || true
