@@ -1,26 +1,26 @@
 name: Flutter Build APK
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: subosito/flutter-action@v2
-      with:
-        channel: 'stable'
-    - name: Create Base Project
-      run: |
-        rm -rf * .git .github || true
-        flutter create clean_app --org com.najma.app --project-name najma_app
-        mkdir -p .github/workflows
-    - name: Build Standalone APK
-      run: |
-        cd clean_app
-        flutter pub get
-        flutter build apk --release
-    - uses: actions/upload-artifact@v4
-      with:
-        name: najma-app-release
-        path: clean_app/build/app/outputs/flutter-apk/app-release.apk
+      - uses: actions/checkout@v4
+      
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          
+      - name: Configure Manifest and Build
+        run: |
+          mkdir -p android/app src
+          [ -f pubspec.yaml ] || echo -e "name: najma_app\nenvironment:\n  sdk: '>=3.0.0 <4.0.0'\ndependencies:\n  flutter:\n    sdk: flutter\n  cupertino_icons: ^1.0.2" > pubspec.yaml
+          flutter build apk --release
+          
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: najma-app-release
+          path: build/app/outputs/flutter-apk/app-release.apk
