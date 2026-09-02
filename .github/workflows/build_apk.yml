@@ -1,52 +1,23 @@
 name: Flutter Build APK
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          
-      - name: Build App inside Subfolder
-        run: |
-          flutter create najma_project_app --org com.najma.app --project-name najma_app --force
-          rm -rf najma_project_app/lib/*
-          cp -r *.dart najma_project_app/lib/ 2>/dev/null || true
-          cp -r lib/* najma_project_app/lib/ 2>/dev/null || true
-          
-          cat << 'INNER_EOF' > najma_project_app/pubspec.yaml
-          name: najma_app
-          description: "منصة نجمة المتكاملة ومحفظة StarPay السحابية"
-          publish_to: 'none'
-          version: 1.0.0+1
-          environment:
-            sdk: '>=3.0.0 <4.0.0'
-          dependencies:
-            flutter:
-              sdk: flutter
-            cupertino_icons: ^1.0.2
-          dev_dependencies:
-            flutter_test:
-              sdk: flutter
-            flutter_lints: ^2.0.0
-          flutter:
-            uses-material-design: true
-          INNER_EOF
-          
-      - name: Build APK Release
-        run: |
-          cd najma_project_app
-          flutter pub get
-          flutter build apk --release
-        
-      - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: najma-app-release
-          path: najma_project_app/build/app/outputs/flutter-apk/app-release.apk
+    - uses: actions/checkout@v4
+    - uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+    - name: Run Build
+      run: |
+        flutter create --org com.najma.app najma_project
+        cd najma_project
+        flutter pub get
+        flutter build apk --release
+    - name: Upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: najma-app-release
+        path: najma_project/build/app/outputs/flutter-apk/app-release.apk
