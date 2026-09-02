@@ -13,12 +13,41 @@ jobs:
         with:
           channel: 'stable'
           
-      - name: Configure Manifest and Build
+      - name: Build Global Android Structure and Merge Code
         run: |
-          mkdir -p android/app src
-          [ -f pubspec.yaml ] || echo -e "name: najma_app\nenvironment:\n  sdk: '>=3.0.0 <4.0.0'\ndependencies:\n  flutter:\n    sdk: flutter\n  cupertino_icons: ^1.0.2" > pubspec.yaml
-          flutter build apk --release
+          mkdir -p backup_code
+          cp -r *.dart backup_code/ 2>/dev/null || true
+          cp -r lib/* backup_code/ 2>/dev/null || true
+          rm -rf * .git .github || true
+          flutter create . --org com.najma.app --project-name najma_app --force
+          mkdir -p .github/workflows
+          cp -r backup_code/* lib/ 2>/dev/null || true
           
+          cat << 'INNER_EOF' > pubspec.yaml
+          name: najma_app
+          description: "منصة نجمة المتكاملة ومحفظة StarPay السحابية"
+          publish_to: 'none'
+          version: 1.0.0+1
+          environment:
+            sdk: '>=3.0.0 <4.0.0'
+          dependencies:
+            flutter:
+              sdk: flutter
+            cupertino_icons: ^1.0.2
+          dev_dependencies:
+            flutter_test:
+              sdk: flutter
+            flutter_lints: ^2.0.0
+          flutter:
+            uses-material-design: true
+          INNER_EOF
+          
+      - name: Fetch Dependencies
+        run: flutter pub get
+        
+      - name: Build APK Release
+        run: flutter build apk --release
+        
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
