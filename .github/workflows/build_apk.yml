@@ -13,23 +13,24 @@ jobs:
         with:
           channel: 'stable'
           
-      - name: Create Clean Flutter Project and Merge Code
+      - name: Setup Clean App and Merge Code
         run: |
-          mkdir -p backup_lib
-          cp -r lib/* backup_lib/ || true
-          rm -rf * .git .github || true
-          flutter create . --org com.najma.app --project-name najma_app --force
-          mkdir -p .github/workflows
-          cp -r backup_lib/* lib/ || true
+          flutter create clean_holder_app --org com.najma.app --project-name najma_app --force
+          cp -r main_navigation.dart clean_holder_app/lib/ 2>/dev/null || true
+          cp -r lib/* clean_holder_app/lib/ 2>/dev/null || true
           
       - name: Fetch Dependencies
-        run: flutter pub get
+        run: |
+          cd clean_holder_app
+          flutter pub get
         
       - name: Build APK Release
-        run: flutter build apk --release
+        run: |
+          cd clean_holder_app
+          flutter build apk --release
         
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: najma-app-release
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: clean_holder_app/build/app/outputs/flutter-apk/app-release.apk
