@@ -13,11 +13,13 @@ jobs:
         with:
           channel: 'stable'
           
-      - name: Setup Clean App and Merge Code
+      - name: Setup Clean App and Organize Files
         run: |
           flutter create clean_holder_app --org com.najma.app --project-name najma_app --force
+          rm -rf clean_holder_app/lib/*
+          cp -r main.dart clean_holder_app/lib/ 2>/dev/null || true
           cp -r main_navigation.dart clean_holder_app/lib/ 2>/dev/null || true
-          cp -r lib/* clean_holder_app/lib/ 2>/dev/null || true
+          cp -r *.dart clean_holder_app/lib/ 2>/dev/null || true
           
       - name: Fetch Dependencies
         run: |
