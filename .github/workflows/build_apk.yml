@@ -13,20 +13,14 @@ jobs:
         with:
           channel: 'stable'
           
-      - name: Organize Code into Lib and Build Structure
+      - name: Build App inside Subfolder
         run: |
-          mkdir -p temp_lib
-          cp -r *.dart temp_lib/ 2>/dev/null || true
-          cp -r lib/* temp_lib/ 2>/dev/null || true
-          rm -rf * .git .github || true
+          flutter create najma_project_app --org com.najma.app --project-name najma_app --force
+          rm -rf najma_project_app/lib/*
+          cp -r *.dart najma_project_app/lib/ 2>/dev/null || true
+          cp -r lib/* najma_project_app/lib/ 2>/dev/null || true
           
-          mkdir -p lib
-          cp -r temp_lib/* lib/ 2>/dev/null || true
-          rm -rf temp_lib
-          
-          flutter create . --org com.najma.app --project-name najma_app --force
-          
-          cat << 'INNER_EOF' > pubspec.yaml
+          cat << 'INNER_EOF' > najma_project_app/pubspec.yaml
           name: najma_app
           description: "منصة نجمة المتكاملة ومحفظة StarPay السحابية"
           publish_to: 'none'
@@ -45,14 +39,14 @@ jobs:
             uses-material-design: true
           INNER_EOF
           
-      - name: Fetch Dependencies
-        run: flutter pub get
-        
       - name: Build APK Release
-        run: flutter build apk --release
+        run: |
+          cd najma_project_app
+          flutter pub get
+          flutter build apk --release
         
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: najma-app-release
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: najma_project_app/build/app/outputs/flutter-apk/app-release.apk
