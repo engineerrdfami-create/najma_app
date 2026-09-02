@@ -8,12 +8,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-      - run: flutter pub get || true
-      - run: flutter build apk --release || true
-      - name: Upload APK
+          
+      - name: Create Clean Flutter Project and Merge Code
+        run: |
+          mkdir -p backup_lib
+          cp -r lib/* backup_lib/ || true
+          rm -rf * .git .github || true
+          flutter create . --org com.najma.app --project-name najma_app --force
+          mkdir -p .github/workflows
+          cp -r backup_lib/* lib/ || true
+          
+      - name: Fetch Dependencies
+        run: flutter pub get
+        
+      - name: Build APK Release
+        run: flutter build apk --release
+        
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: najma-app-release
