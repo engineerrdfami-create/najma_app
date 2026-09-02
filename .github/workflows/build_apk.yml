@@ -10,9 +10,17 @@ jobs:
     - uses: subosito/flutter-action@v2
       with:
         channel: 'stable'
-    - run: flutter pub get
-    - run: flutter build apk --release
+    - name: Create Base Project
+      run: |
+        rm -rf * .git .github || true
+        flutter create clean_app --org com.najma.app --project-name najma_app
+        mkdir -p .github/workflows
+    - name: Build Standalone APK
+      run: |
+        cd clean_app
+        flutter pub get
+        flutter build apk --release
     - uses: actions/upload-artifact@v4
       with:
         name: najma-app-release
-        path: build/app/outputs/flutter-apk/app-release.apk
+        path: clean_app/build/app/outputs/flutter-apk/app-release.apk
