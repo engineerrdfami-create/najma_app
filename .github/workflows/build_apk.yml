@@ -13,15 +13,18 @@ jobs:
         with:
           channel: 'stable'
           
-      - name: Build Global Android Structure and Merge Code
+      - name: Organize Code into Lib and Build Structure
         run: |
-          mkdir -p backup_code
-          cp -r *.dart backup_code/ 2>/dev/null || true
-          cp -r lib/* backup_code/ 2>/dev/null || true
+          mkdir -p temp_lib
+          cp -r *.dart temp_lib/ 2>/dev/null || true
+          cp -r lib/* temp_lib/ 2>/dev/null || true
           rm -rf * .git .github || true
+          
+          mkdir -p lib
+          cp -r temp_lib/* lib/ 2>/dev/null || true
+          rm -rf temp_lib
+          
           flutter create . --org com.najma.app --project-name najma_app --force
-          mkdir -p .github/workflows
-          cp -r backup_code/* lib/ 2>/dev/null || true
           
           cat << 'INNER_EOF' > pubspec.yaml
           name: najma_app
