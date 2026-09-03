@@ -16,7 +16,6 @@ jobs:
           rm -f najma_project/lib/main.dart
           cp -rf lib/* najma_project/lib/
           
-          # استبدال ملف الملاحة المعطل بنسخة مستقرة وديناميكية ومتوافقة مع السيرفر
           cat << 'INNER_EOF' > najma_project/lib/main_navigation.dart
           import 'package:flutter/material.dart';
           import 'star_chat.dart';
@@ -66,7 +65,6 @@ jobs:
           }
           INNER_EOF
 
-          # تصحيح ملف المحفظة تلقائياً
           cat << 'INNER_EOF2' > najma_project/lib/starpay_wallet.dart
           import 'package:flutter/material.dart';
           class StarPayWallet extends StatelessWidget {
@@ -89,6 +87,9 @@ jobs:
             }
           }
           INNER_EOF2
+
+          sed -i 's/backgroundColor: const Color/backgroundColor: Color/g' najma_project/lib/star_chat.dart || true
+          sed -i 's/leading: const Padding/leading: Padding/g' najma_project/lib/star_chat.dart || true
 
           cd najma_project
           flutter pub get
