@@ -12,19 +12,14 @@ jobs:
           channel: 'stable'
       - name: Create and Setup Project
         run: |
-          # 1. إنشاء مشروع فلاتر حقيقي ونظيف في مجلد مؤقت
-          flutter create --org com.najma.app --project-name najma_app temp_project
+          # 1. إنشاء مشروع فلاتر نظيف وحقيقي في مجلد فرعي
+          flutter create --org com.najma.app --project-name najma_app najma_project
           
-          # 2. نقل ملفات الواجهات الأسطورية الخاصة بك إلى داخل المشروع الجديد
-          rm -rf temp_project/lib/*
-          cp -r lib/* temp_project/lib/
+          # 2. نقل ملفات الواجهات الأسطورية الخاصة بك إلى داخل مجلد الـ lib الجديد
+          cp -f lib/* najma_project/lib/
           
-          # 3. استبدال المجلد الحالي بالمشروع الجديد الكامل
-          mv temp_project/* .
-          mv temp_project/.* . 2>/dev/null || true
-          
-      - name: Build APK Release
-        run: |
+          # 3. الانتقال إلى مجلد المشروع الجديد لتنفيذ البناء من داخله
+          cd najma_project
           flutter pub get
           flutter build apk --release
           
@@ -32,5 +27,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: najma-app-release
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: najma_project/build/app/outputs/flutter-apk/app-release.apk
 
