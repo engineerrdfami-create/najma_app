@@ -13,14 +13,11 @@ import 'package:najma_app/star_chat.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
-
   @override
   State<MainNavigation> createState() => _MainNavigationState();
 }
-
 class _MainNavigationState extends State<MainNavigation> {
   int _currentIndex = 0;
-
   final List<Widget> _screens = [
     const StarChat(),
     const NajmaReels(),
@@ -28,21 +25,16 @@ class _MainNavigationState extends State<MainNavigation> {
     const StarMarket(),
     const StarPayWallet(),
   ];
-
   @override
   void initState() {
     super.initState();
     DatabaseService.fetchViralReels();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF0D0D0D),
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _screens,
-      ),
+      body: IndexedStack(index: _currentIndex, children: _screens),
       bottomNavigationBar: Container(
         height: 80,
         decoration: BoxDecoration(

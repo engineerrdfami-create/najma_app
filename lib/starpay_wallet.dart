@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:najma_app/database_service.dart'; // 🔗 ربط المحفظة بقاعدة البيانات الحقيقية
-import 'security_service.dart'; // 🔒 ربط المحفظة بنظام الأمان بالبصمة
+import 'package:najma_app/database_service.dart';
+import 'package:najma_app/security_service.dart';
+
 
 class StarPayWallet extends StatefulWidget {
   const StarPayWallet({super.key});
