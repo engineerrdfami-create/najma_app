@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 // 🚀 استيراد كافة ملفات الخدمات والواجهات السحابية والأمان والشات لتطبيق نجمة المتكامل
-import 'hub_icon.dart';
-import 'reels_icon.dart';
-import 'create_icon.dart';
-import 'market_icon.dart';
-import 'profile_icon.dart';
-import 'starpay_wallet.dart';
-import 'database_service.dart';
-import 'star_market.dart';
-import 'star_live.dart';     
-import 'najma_reels.dart';   
-import 'star_chat.dart';     // 🔗 ربط شاشة المراسلة الفورية الحقيقية المتقدمة الجديدة
+     // 🔗 ربط شاشة المراسلة الفورية الحقيقية المتقدمة الجديدة
 
 class MainNavigation extends StatefulWidget {
+import 'package:najma_app/hub_icon.dart';
+import 'package:najma_app/reels_icon.dart';
+import 'package:najma_app/create_icon.dart';
+import 'package:najma_app/market_icon.dart';
+import 'package:najma_app/profile_icon.dart';
+import 'package:najma_app/starpay_wallet.dart';
+import 'package:najma_app/database_service.dart';
+import 'package:najma_app/star_market.dart';
+import 'package:najma_app/star_live.dart';
+import 'package:najma_app/najma_reels.dart';
+import 'package:najma_app/star_chat.dart';
   const MainNavigation({super.key});
 
   @override

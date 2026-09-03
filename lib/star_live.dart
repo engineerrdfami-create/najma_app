@@ -40,7 +40,7 @@ class StarLive extends StatelessWidget {
                         children: [
                           // شعار البث المباشر المضيء
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, py: 4),
+                            padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 4),
                             decoration: BoxDecoration(
                               color: Colors.redAccent,
                               borderRadius: BorderRadius.circular(8),
@@ -53,7 +53,7 @@ class StarLive extends StatelessWidget {
                           const SizedBox(width: 8),
                           // عداد المشاهدين الزجاجي
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, py: 4),
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                             decoration: BoxDecoration(
                               color: Colors.white.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(8),

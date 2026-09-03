@@ -7,11 +7,11 @@ class StarChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0D0D), // الأسود العميق للتطبيق
+      backgroundColor: Color(0xFF0D0D0D), // الأسود العميق للتطبيق
       appBar: AppBar(
         backgroundColor: Colors.white.withOpacity(0.04), // بار زجاجي شفاف
         elevation: 0,
-        leading: const Padding(
+        leading: Padding(
           padding: EdgeInsets.all(8.0),
           child: CircleAvatar(
             backgroundColor: Color(0xFF8A2BE2),

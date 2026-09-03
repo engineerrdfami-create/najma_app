@@ -12,13 +12,16 @@ jobs:
           channel: 'stable'
       - name: Create and Setup Project
         run: |
-          # 1. إنشاء مشروع فلاتر نظيف وحقيقي في مجلد فرعي
+          # 1. إنشاء مشروع فلاتر نظيف وحقيقي
           flutter create --org com.najma.app --project-name najma_app najma_project
           
-          # 2. نقل ملفات الواجهات الأسطورية الخاصة بك إلى داخل مجلد الـ lib الجديد
-          cp -f lib/* najma_project/lib/
+          # 2. مسح ملف main الافتراضي وتجهيز المجلد
+          rm -f najma_project/lib/main.dart
           
-          # 3. الانتقال إلى مجلد المشروع الجديد لتنفيذ البناء من داخله
+          # 3. نسخ كافة ملفاتك البرمجية السبعة والأيقونات بدقة إلى المشروع الجديد
+          cp -rf lib/* najma_project/lib/
+          
+          # 4. الانتقال وبناء التطبيق من مجلد المشروع المستقر
           cd najma_project
           flutter pub get
           flutter build apk --release
