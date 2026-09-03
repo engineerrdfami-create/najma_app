@@ -10,11 +10,24 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+      - name: Create and Setup Project
+        run: |
+          # 1. إنشاء مشروع فلاتر حقيقي ونظيف في مجلد مؤقت
+          flutter create --org com.najma.app --project-name najma_app temp_project
+          
+          # 2. نقل ملفات الواجهات الأسطورية الخاصة بك إلى داخل المشروع الجديد
+          rm -rf temp_project/lib/*
+          cp -r lib/* temp_project/lib/
+          
+          # 3. استبدال المجلد الحالي بالمشروع الجديد الكامل
+          mv temp_project/* .
+          mv temp_project/.* . 2>/dev/null || true
+          
       - name: Build APK Release
         run: |
           flutter pub get
           flutter build apk --release
-        working-directory: .
+          
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
