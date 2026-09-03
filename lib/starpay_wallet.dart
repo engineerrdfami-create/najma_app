@@ -1,4 +1,4 @@
-gimport 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:najma_app/database_service.dart'; // 🔗 ربط المحفظة بقاعدة البيانات الحقيقية
 import 'security_service.dart'; // 🔒 ربط المحفظة بنظام الأمان بالبصمة
 
